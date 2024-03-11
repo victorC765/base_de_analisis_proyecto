@@ -1,0 +1,60 @@
+.es{
+    padding: 15px;
+}
+@import url('https://fonts.googleapis.com/css2?family=Madimi+One&display=swap');
+.t{
+    margin: 100px;
+    padding: 50px;
+    background-color: rgb(72, 36, 156);
+    border-radius: 50px;
+    height: 100%;
+    max-height:700px ;
+}
+
+.custom-backdrop {
+    background-color: rgba(27, 0, 39, 0.879); /* Ajusta la transparencia del backdrop */
+   }
+   
+   .custom-modal-content {
+    background-color: #ccc0ff; 
+    border-radius: 40px;/* Cambia el color de fondo del contenido de la modal */
+   }
+   .contain {
+    padding: 40px;
+   }
+   .custom-modalHead{
+    
+    background-color:  #272855;
+    color: aliceblue;
+    font-family: "Madimi One", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+   }
+   .ta{
+    background-color: rgb(243, 51, 111);
+    padding: 50px;
+    margin: 90px;
+    border-radius: 40px;
+}
+.cb{
+    color: black;
+    padding: 9px;
+}
+.gh{
+    display: flex;
+}
+.esp{
+    display: flex;
+		justify-content: space-between;
+}
+
+.custom-modal-content-ac{
+    background-color: #ffb2ff;
+    color: azure;
+}
+.custom-backdrop-ac{
+    background-color: rgb(104, 3, 77);
+}
+.custom-modalHead-ac{
+    background-color: #670038;
+}

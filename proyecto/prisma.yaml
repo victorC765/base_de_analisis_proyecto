@@ -1,0 +1,8 @@
+version: 1
+datasources:
+  db:
+    provider: mysql   
+     url: "mysql://localhost:5432/actividades_incidencias"
+
+generator:
+  output: ./generated/
