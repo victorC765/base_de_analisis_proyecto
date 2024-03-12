@@ -8,7 +8,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 
 // Conexión con el manejador de db
 let conexion;
@@ -43,7 +43,9 @@ app.get('*', (req, res) => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.get('/validar', async (req, res) => {
+
+
+app.get('/seleccion', async (req, res) => {
  try {
     const [results] = await conexion.execute('SELECT * FROM incidentes');
     res.json(results);
@@ -54,7 +56,7 @@ app.get('/validar', async (req, res) => {
 });
 
 app.post("/validar", async (req, res) => {
- const { incidente, descripcion, fecha, hora, ubicacion } = req.body;
+ const { incidente, descripcion, fecha, hora, ubicacion,actividad , descripcionac, ubicacionac, horaci, horacf, pt } = req.body;
 
  try {
     await conexion.execute(
@@ -66,6 +68,16 @@ app.post("/validar", async (req, res) => {
  } catch (error) {
     console.error('Error al registrar incidente:', error);
     res.status(500).send('Error al registrar incidente');
+ }
+   await conexion.execute(
+     'INSERT INTO `actividades_ejecucion`( `actividad`, `descripcion_actividad`, `lugar`, `hora_incio`, `hora_fin`, `Paquete_Turistico_id_Paquete_Turistico`,  ) VALUES (?,?,?,?,?,?)',
+     [actividad, descripcionac, ubicacionac, horaci, horacf, pt]
+   );
+   console.log("Registro exitoso :)");
+   res.status(200).send('Registro exitoso');
+ } catch (error) {
+   console.error('Error al registrar actividad:', error);
+   res.status(500).send('Error al registrar actividad');
  }
 });
 

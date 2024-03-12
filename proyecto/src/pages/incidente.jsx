@@ -23,7 +23,7 @@ export default function Incidente(args) {
 
   
  useEffect(() => {
-  fetch('/validar')
+  fetch('/seleccion')
     .then(response => response.json())
     .then(data => setIncidentes(data))
     .catch(error => console.error('Error al obtener incidentes:', error));
@@ -32,7 +32,7 @@ return(
   <div className="t">
       <div>
         <h1>Incidentes</h1>
-        <table>
+        <Table>
           <thead>
             <tr className="table-dark">
               <th className="p-4">incidente</th>
@@ -45,16 +45,16 @@ return(
             </tr>
           </thead>
           <tbody>
-          {incidentes.map((incidente, index) => (
+          {incidentes.map((incidentes, index) => (
             <tr key={index}>
-              <td>{incidente.descripcion_incidente}</td>
-              <td>{incidente.fecha}</td>
-              <td>{incidente.hora}</td>
-              <td>{incidente.ubicacion}</td>
+              <td>{incidentes.descripcion_incidente}</td>
+              <td>{incidentes.fecha}</td>
+              <td>{incidentes.hora}</td>
+              <td>{incidentes.ubicacion}</td>
             </tr>
           ))}
         </tbody>
-        </table>
+        </Table>
       </div>
       <Button color="primary" variant="shadow" onClick={toggle}>
         Crear

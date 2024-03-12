@@ -56,7 +56,7 @@ export default function Actividad(args) {
         centered
         backdropClassName="custom-backdrop-ac" // Clase personalizada para el backdrop
         contentClassName="custom-modal-content-ac">
-
+        <form action="/validar" method="post">
         <ModalHeader className="custom-modalHead-ac" toggle={toggle}>
           <h3>Registrar Incidente</h3>
         </ModalHeader>
@@ -65,30 +65,45 @@ export default function Actividad(args) {
           <FormGroup>
               <Label>Actividad</Label>
               <Input type="select" name="actividad">
-               <option value="1">refrigerio</option>
-               <option value="2">kareoke</option>
-               <option value="3">parada</option>
-               <option value="4">almuerzo</option>
+               <option value="1">deportiva</option>
+               <option value="2">recreacion</option>
+               <option value="3">alimentacion</option>
+               <option value="4">riesgo</option>
               </Input>
           </FormGroup>
           <FormGroup>
             <Label>Descripción</Label>
-            <Input type="textarea" name="descripcion" />
+            <Input type="textarea" name="descripcionac" />
           </FormGroup>
           <FormGroup>
             <Label>Ubicación</Label>
-            <Input type="text" name="ubicacion" />
+            <Input type="text" name="ubicacionac" />
           </FormGroup>
+          <FormGroup>
+            <Label>hora inicio:</Label>
+            <Input type="time" name="horaci">  </Input>
+          </FormGroup>
+          <FormGroup>
+            <Label>hora final:</Label>
+            <Input type="time" name="horacfc">  </Input>
+          </FormGroup>
+          <FormGroup>
+            <Label>paquete turistico:</Label>
+            <Input type="select" name="pt">   
+            <option value="1">Morrocoi</option>    
+            </Input>  
+            </FormGroup>
           </div>
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={handleSubmit} >
+          <Button color="primary" type="submit" >
             Registrar
           </Button>{" "}
           <Button color="secondary" onClick={toggle}>
             Cancel
           </Button>
         </ModalFooter>
+        </form>
       </Modal>
         </div>
         </>
