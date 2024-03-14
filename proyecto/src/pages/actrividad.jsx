@@ -8,23 +8,11 @@ import "../styles/incidetes.css";
 export default function Actividad(args) {
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
-  const [actividades, setActividades] = useState([]);
-
-  useEffect(() => {
-    // Petición GET a la API
-    fetch('http://localhost:3000/actividades')
-      .then((response) => response.json())
-      .then((data) => {
-        setActividades(data);
-      })
-      .catch((error) => {
-        console.error('Error fetching activities:', error);
-      });
-  }, []);
+  s
 
   return (
     <div>
-    <div>
+    <div className="ta">
       <h1>Actividades</h1>
       <Table>
         <thead>
@@ -44,9 +32,10 @@ export default function Actividad(args) {
 ))}
         </tbody>
       </Table>
+      <Button onClick={toggle} color="primary">Agregar</Button>
     </div>
 
-          <Button onClick={toggle} color="primary">Agregar</Button>
+     
         <div>
             <Modal
         isOpen={modal}
@@ -57,13 +46,13 @@ export default function Actividad(args) {
         contentClassName="custom-modal-content-ac">
         <form action="/regiac" method="post">
         <ModalHeader className="custom-modalHead-ac" toggle={toggle}>
-          <h3>Registrar Incidente</h3>
+          <h3>nueva actividad</h3>
         </ModalHeader>
         <ModalBody>
             <div className="contain">
           <FormGroup>
               <Label>Categoria</Label>
-              <Input type="text" name="catego">
+              <Input type="select" name="catego" >
                <option value="1">deportiva</option>
                <option value="2">recreacion</option>
                <option value="3">alimentacion</option>
@@ -72,7 +61,7 @@ export default function Actividad(args) {
           </FormGroup>
           <FormGroup>
             <Label> Actividad:</Label>
-
+            <Input type="text" name="actividad" />
           </FormGroup>
           <FormGroup>
             <Label>Descripción</Label>
@@ -99,7 +88,7 @@ export default function Actividad(args) {
           </div>
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" type="submit" >
+          <Button color="danger" type="submit" >
             Registrar
           </Button>{" "}
           <Button color="secondary" onClick={toggle}>

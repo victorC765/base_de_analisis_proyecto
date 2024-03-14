@@ -38,31 +38,25 @@ app.get('*', (req, res) => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.get("/", function(req,res){
-    res.render("validar");
-})
-app.get('/nose', async (req, res) => {
 
-
-  // Consulta SELECT
-  const actividades_ejecucion = await conexion.query('SELECT * FROM actividades_ejecucion');
-
-  // Manejo de errores
-  if (actividades_ejecucion.error) {
-    throw actividades_ejecucion.error;
-  }
-console.log(actividades_ejecucion);
-  // Enviar datos al front-end
-  res.json(actividades_ejecucion);
+app.post('/ruta-de-tu-endpoint', (req, res) => {
+  // Aquí va tu lógica para realizar la consulta SELECT
+  // Por ejemplo:
+  conexion.query('SELECT * FROM tu_tabla', (error, results) => {
+     if (error) {
+       console.error('Error al ejecutar la consulta:', error);
+       res.status(500).send('Error al ejecutar la consulta');
+     } else {
+       console.log(results); // Muestra los resultados en la consola del servidor
+       res.json(results); // Envía los resultados al frontend
+     }
+  });
  });
-
-
-
 
 app.post("/regiac",function(req,res)
   {
-      const { catego,actividad, descripcionac, ubicacionac, horaci, horacf, pt } = req.body;
-      let inyec="INSERT INTO `actividades_ejecucion`(  `actividad`, `descripcion_actividad`, `lugar`, `hora_incio`, `hora_fin`, `Paquete_Turistico_id_Paquete_Turistico`, `categoria_id_categoria`, `Bitacora_id_Bitacora`, `cumplimiento_id_cumplimiento`) VALUES ('"+actividad+"','"+descripcionac+"','"+ubicacionac+"','"+horaci+"','"+horacf+"','"+pt+"','"+catego+"','1','1')"
+      const { catego, actividad, descripcionac, ubicacionac, horaci, horacfc, pt } = req.body;
+      let inyec="INSERT INTO `actividades_ejecucion`(  `actividad`, `descripcion_actividad`, `lugar`, `hora_incio`, `hora_fin`, `Paquete_Turistico_id_Paquete_Turistico`, `categoria_id_categoria`, `Bitacora_id_Bitacora`, `cumplimiento_id_cumplimiento`) VALUES ('"+actividad+"','"+descripcionac+"','"+ubicacionac+"','"+horaci+"','"+horacfc+"','"+pt+"','"+catego+"','1','1')"
       conexion.query(inyec,function(error){
           if(error){
               console.log(error);
@@ -70,6 +64,8 @@ app.post("/regiac",function(req,res)
               console.log("Registro exitoso");
           }      
       });
+      
+      
   }
 )
 app.post("/validar",function(req,res)
