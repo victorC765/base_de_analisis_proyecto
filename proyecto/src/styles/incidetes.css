@@ -9,7 +9,7 @@
     border-radius: 40px;
     opacity: 0.96;
     margin: 80px;
-    max-height: 300px;
+    height: 100%;
     text-align: center;
     
 }
@@ -42,20 +42,23 @@
 }
 
 .custom-modal-content-ac{
-    background-color: #ffb2ff;
+    background-color: #93ffe8;
     border-radius: 40px;
-    color: azure;
+    color: rgb(3, 56, 56);
 }
 .custom-backdrop-ac{
-    background-color: rgb(104, 3, 77);
+    background-color: rgb(0, 17, 16);
 }
 .custom-modalHead-ac{
-    background-color: #670038;
+    background-color: #249c78;
 }
 .custom-modal-content{
     background-color: #dec7fd;
     border-radius: 40px;
     color: rgb(28, 4, 44);
+}
+.custom-backdrop{
+    background-color: #110225;
 }
 .custom-modalHead{
     text-align: center;
@@ -68,4 +71,19 @@
 }
 .hen{
     padding: 15px;
+}
+.coin{
+    
+    display : flex;
+   padding: 20px;
+}
+.bus{
+    width: 500px;
+    height: 50px;
+    margin: 15px;
+    padding: 20px;
+    border-radius: 25px;
+}
+.m{
+    justify-content: space-between;
 }

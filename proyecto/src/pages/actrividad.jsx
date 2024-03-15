@@ -13,8 +13,20 @@ export default function Actividad(args) {
   return (
     <div className="cen">
     <div className="ta">
-    
-      <h1>Actividades</h1>
+    <h1>Actividades</h1>
+    <div className="coin">
+   
+    <div className="m">
+    <Label>Paquete Turistico:</Label>
+      <Input type="select" name="pt" placeholder="pt" id="pt">
+        <option>las canarias</option>
+        </Input>
+        </div>
+        
+        <div >
+       <input className="bus" type="text" name="buscar" id="buscar" placeholder="🔍 buscar"/>
+        </div>
+        </div>
       <Table dark>
         <thead>
           <tr>
