@@ -8,13 +8,14 @@ import "../styles/incidetes.css";
 export default function Actividad(args) {
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
-  s
+  
 
   return (
-    <div>
+    <div className="cen">
     <div className="ta">
+    
       <h1>Actividades</h1>
-      <Table>
+      <Table dark>
         <thead>
           <tr>
             <th>Actividad</th>
@@ -23,16 +24,11 @@ export default function Actividad(args) {
           </tr>
         </thead>
         <tbody>
-        {actividades.map((actividad) => (
-  <tr key={actividad.id}> {/* Agrega la propiedad key con un valor único */}
-    <td>{actividad.actividad}</td>
-    <td>{actividad.descripcion_actividad}</td>
-    <td>{actividad.ubicacion}</td>
-  </tr>
-))}
-        </tbody>
+      
+    </tbody>
       </Table>
       <Button onClick={toggle} color="primary">Agregar</Button>
+     
     </div>
 
      

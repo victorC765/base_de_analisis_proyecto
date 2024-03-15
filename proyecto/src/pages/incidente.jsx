@@ -1,5 +1,5 @@
 import { useState,  useEffect  } from "react";
-
+import inc from "../assets/incidente.png"
 import {
   Modal,
   Table,
@@ -29,10 +29,12 @@ export default function Incidente(args) {
     .catch(error => console.error('Error al obtener incidentes:', error));
 }, []);
 return(
-  <div className="t">
-      <div>
+  
+  <div >
+    <div className="cen">
+      <div className="t">
         <h1>Incidentes</h1>
-        <Table>
+        <Table size="sm">
           <thead>
             <tr className="table-dark">
               <th className="p-4">incidente</th>
@@ -55,11 +57,12 @@ return(
           ))}
         </tbody>
         </Table>
-      </div>
-      <Button color="primary" variant="shadow" onClick={toggle}>
+        <Button color="primary" variant="shadow" onClick={toggle}>
         Crear
       </Button>
-    
+      </div>
+      
+      </div>
       <Modal
         isOpen={modal}
         toggle={toggle}
@@ -71,7 +74,9 @@ return(
         >
           <form action="/validar" method="post">
         <ModalHeader className="custom-modalHead" toggle={toggle}>
-          <h3>Registrar Incidente</h3>
+          <div className="gh">
+          <img src={inc} width="35" height="35" /><h3 className="hen">Registrar Incidente</h3>
+          </div>
         </ModalHeader>
         
         <ModalBody>
