@@ -11,35 +11,38 @@ import {
   Input,
   Button
 } from "reactstrap";
-
-
 import "../styles/incidetes.css";
 
 export default function Incidente(args) {
   const [modal, setModal] = useState(false);
   const toggle = () => {setModal(!modal);}
 
-  const [incidentes, setIncidentes] = useState([]);
+  const [data, setData] = useState([]);
 
-  
  useEffect(() => {
-  fetch('/seleccion')
-    .then(response => response.json())
-    .then(data => setIncidentes(data))
-    .catch(error => console.error('Error al obtener incidentes:', error));
-}, []);
+    fetch('http://localhost:3000/inci')
+      .then(response => response.json())
+      .then(data => setData(data))
+      .catch(error => console.error('Error fetching data:', error));
+ }, []);
 return(
   
   <div >
     <div className="cen">
-      <div className="t">
+      <div className="ta">
+
         <h1>Incidentes</h1>
+          
+    <div className="m">
+    <Label>Paquete Turistico:</Label>
+      <Input type="select" name="pt" placeholder="pt" id="pt">
+        <option>Morrocoi</option>
+        </Input>
+        </div>
         <Table size="sm">
           <thead>
             <tr className="table-dark">
-              <th className="p-4">incidente</th>
               <th className="p-4">descripción</th>
-              <th className="p-4"> causa</th>
               <th className="p-4">fecha de reporte</th>
               <th className="p-4">hora</th>
                 
@@ -47,19 +50,19 @@ return(
             </tr>
           </thead>
           <tbody>
-          {incidentes.map((incidentes, index) => (
-            <tr key={index}>
-              <td>{incidentes.descripcion_incidente}</td>
-              <td>{incidentes.fecha}</td>
-              <td>{incidentes.hora}</td>
-              <td>{incidentes.ubicacion}</td>
+          {data.map((item, index) => (
+          <tr key={index}>
+              <td>{item.descripcion_incidente}</td>
+              <td>{item.fecha}</td>
+              <td>{item.hora}</td>
+              <td>{item.ubicacion}</td>
             </tr>
           ))}
         </tbody>
         </Table>
-        <Button color="primary" variant="shadow" onClick={toggle}>
+        <button className="ov-btn-slide-top" onClick={toggle}>
         Crear
-      </Button>
+      </button>
       </div>
       
       </div>

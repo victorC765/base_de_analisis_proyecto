@@ -4,11 +4,19 @@ import { useState, useEffect } from "react";
 
 import { Modal, ModalFooter,Table, ModalBody, ModalHeader, Label, FormGroup, Input, Button } from 'reactstrap';
 import "../styles/incidetes.css";
-
+import ima from "../assets/lista-de-quehaceres.png"
 export default function Actividad(args) {
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
   
+  const [data, setData] = useState([]);
+
+ useEffect(() => {
+    fetch('http://localhost:3000/pepe')
+      .then(response => response.json())
+      .then(data => setData(data))
+      .catch(error => console.error('Error fetching data:', error));
+ }, []);
 
   return (
     <div className="cen">
@@ -19,7 +27,7 @@ export default function Actividad(args) {
     <div className="m">
     <Label>Paquete Turistico:</Label>
       <Input type="select" name="pt" placeholder="pt" id="pt">
-        <option>las canarias</option>
+        <option>Morrocoi</option>
         </Input>
         </div>
         
@@ -27,19 +35,33 @@ export default function Actividad(args) {
        <input className="bus" type="text" name="buscar" id="buscar" placeholder="🔍 buscar"/>
         </div>
         </div>
-      <Table dark>
-        <thead>
-          <tr>
-            <th>Actividad</th>
-            <th>Descripción</th>
-            <th>Ubicación</th>
+      <Table >
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Actividad</th>
+          <th>Descripción</th>
+          <th>Lugar</th>
+          <th>Hora Inicio</th>
+          <th>Hora Fin</th>
+          {/* Agrega más columnas según los datos que estés manejando */}
+        </tr>
+      </thead>
+      <tbody>
+        {data.map((item, index) => (
+          <tr key={index}>
+            <td>{item.id_Actividades_Ejecucion}</td>
+            <td>{item.actividad}</td>
+            <td>{item.descripcion_actividad}</td>
+            <td>{item.lugar}</td>
+            <td>{item.hora_incio}</td>
+            <td>{item.hora_fin}</td>
+            {/* Asegúrate de reemplazar 'id_Actividades_Ejecucion', 'actividad', etc., con los nombres reales de las columnas de tu base de datos */}
           </tr>
-        </thead>
-        <tbody>
-      
-    </tbody>
+        ))}
+      </tbody>
       </Table>
-      <Button onClick={toggle} color="primary">Agregar</Button>
+      <button onClick={toggle} className="ov-btn-slide-top">Agregar</button>
      
     </div>
 
@@ -53,8 +75,12 @@ export default function Actividad(args) {
         backdropClassName="custom-backdrop-ac" // Clase personalizada para el backdrop
         contentClassName="custom-modal-content-ac">
         <form action="/regiac" method="post">
+        
         <ModalHeader className="custom-modalHead-ac" toggle={toggle}>
-          <h3>nueva actividad</h3>
+        <div className="gh">
+          <img src={ima} width="50" height="50"></img>
+          <h3 className="hen">Nueva Actividad</h3>
+          </div>
         </ModalHeader>
         <ModalBody>
             <div className="contain">
@@ -95,7 +121,7 @@ export default function Actividad(args) {
             </FormGroup>
           </div>
         </ModalBody>
-        <ModalFooter>
+        <ModalFooter className="custom-modalfooter-ac">
           <Button color="danger" type="submit" >
             Registrar
           </Button>{" "}
