@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { Modal, ModalFooter,Table, ModalBody, ModalHeader, Label, FormGroup, Input, Button } from 'reactstrap';
 import "../styles/incidetes.css";
 import ima from "../assets/lista-de-quehaceres.png"
+import p from "../pages/p"
 export default function Actividad(args) {
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
@@ -48,9 +49,9 @@ export default function Actividad(args) {
         </tr>
       </thead>
       <tbody>
-        {data.map((item, index) => (
-          <tr key={index}>
-            <td>{item.id_Actividades_Ejecucion}</td>
+        {data.map((item) => (
+          <tr key={item.id_actividades_ejecucion}>
+            <td>{item.id_actividades_ejecucion}</td>
             <td>{item.actividad}</td>
             <td>{item.descripcion_actividad}</td>
             <td>{item.lugar}</td>

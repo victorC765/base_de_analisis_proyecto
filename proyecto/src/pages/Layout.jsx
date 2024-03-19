@@ -12,6 +12,7 @@ const Layout = () =>{
        <div>
          <Link to="/actividad"><button className="fill">Actividad</button></Link>
             <Link to="/incidente"><button className="fill">incidentes</button></Link>
+            <Link to="/p">p</Link>
             </div>  
     </nav>
     <hr />
