@@ -45,7 +45,7 @@ return(
               <th className="p-4">descripción</th>
               <th className="p-4">fecha de reporte</th>
               <th className="p-4">hora</th>
-                
+                <th className="p-4">ubicacion</th>
               <th className="p-4">accción</th>
             </tr>
           </thead>

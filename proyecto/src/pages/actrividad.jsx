@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { Modal, ModalFooter,Table, ModalBody, ModalHeader, Label, FormGroup, Input, Button } from 'reactstrap';
 import "../styles/incidetes.css";
 import ima from "../assets/lista-de-quehaceres.png"
-import p from "../pages/p"
+import CambiosActividad from "./cambiosActividad"
 export default function Actividad(args) {
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
@@ -50,8 +50,8 @@ export default function Actividad(args) {
       </thead>
       <tbody>
         {data.map((item) => (
-          <tr key={item.id_actividades_ejecucion}>
-            <td>{item.id_actividades_ejecucion}</td>
+          <tr key={item.id_Actividades_Ejecucion}>
+            <td>{item.id_Actividades_Ejecucion}</td>
             <td>{item.actividad}</td>
             <td>{item.descripcion_actividad}</td>
             <td>{item.lugar}</td>
@@ -62,8 +62,9 @@ export default function Actividad(args) {
         ))}
       </tbody>
       </Table>
+      
       <button onClick={toggle} className="ov-btn-slide-top">Agregar</button>
-     
+      <CambiosActividad/>
     </div>
 
      
@@ -123,7 +124,7 @@ export default function Actividad(args) {
           </div>
         </ModalBody>
         <ModalFooter className="custom-modalfooter-ac">
-          <Button color="danger" type="submit" >
+          <Button color="danger" type="submit" onClick={toggle}>
             Registrar
           </Button>{" "}
           <Button color="secondary" onClick={toggle}>

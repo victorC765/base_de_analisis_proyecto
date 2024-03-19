@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import {
  Input,
  Label,
- Modal
+ Modal,
+ ModalFooter,
+ ModalHeader
 } from "reactstrap";
 const FormularioActualizacion = (args) => {
-    const [modal, setModal] = useState(false);s
+    const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);
     
     const [datosFormulario, setDatosFormulario] = useState({
@@ -55,13 +57,17 @@ const FormularioActualizacion = (args) => {
     };
     return (
         <>
-        <button onClick={toggle}>nanisais </button>
+        <button onClick={toggle}>tunometes crabra</button>
         <Modal 
         isOpen={modal}
         toggle={toggle}
         {...args}
         >
         <form onSubmit={manejarEnvio}>
+            <ModalHeader>
+                <Label>Cambios en Actividad
+                </Label>
+            </ModalHeader>
             {/* Agrega campos de entrada para cada columna que desees actualizar */}
             <Label >id:</Label>
             <Input type="text" name="id_Actividades_Ejecucion" value={datosFormulario.id_Actividades_Ejecucion} onChange={manejarCambio} />
@@ -74,30 +80,34 @@ const FormularioActualizacion = (args) => {
  
             <Label>
                 Inicio:
-                <Input type='date' name='hora_incio' value={datosFormulario.hora_incio} onChange={manejarCambio} />
+                <Input type='time' name='hora_incio' value={datosFormulario.hora_incio} onChange={manejarCambio} />
             </Label>
             <Label>
                 Hora fin:
-                <Input type='date' name='hora_fin' value={datosFormulario.hora_fin} onChange={manejarCambio} />
+                <Input type='time' name='hora_fin' value={datosFormulario.hora_fin} onChange={manejarCambio} />
             </Label>
 
             <Label>
-                Paquete turistico:
-                <Input type='select' name='Paquete_Turistico_id_Paquete_Turistico' value={datosFormulario.Paquete_Turistico_id_Paquete_Turistico} onChange={manejarCambio}>
-                    <option value="1">Morrocoi</option>    
-                </Input>
-            </Label>
-            <Label>
-                Categoria:
-                <Input type='select' name='categoria_id_categoria' value={datosFormulario.categoria_id_categoria} onChange={manejarCambio}>
-                    <option value="1">deportiva</option>
-                    <option value="2">recreacion</option>
-                    <option value="3">alimentacion</option>
-                    <option value="4">riesgo</option>
-                </Input>
-            </Label>
+    Paquete turistico:
+    <Input type='select' name='Paquete_Turistico_id_Paquete_Turistico' value={datosFormulario.Paquete_Turistico_id_Paquete_Turistico} onChange={manejarCambio}>
+        <option value="1">Morrocoi</option>    
+    </Input>
+</Label>
+<Label>
+    Categoria:
+    <Input type='select' name='categoria_id_categoria' value={datosFormulario.categoria_id_categoria} onChange={manejarCambio}>
+        <option value="1">deportiva</option>
+        <option value="2">recreacion</option>
+        <option value="3">alimentacion</option>
+        <option value="4">riesgo</option>
+    </Input>
+</Label>
+    <ModalFooter>
             {/* Repite para cada campo */}
             <Input type="submit" value="Actualizar" />
+            </ModalFooter>
+
+            <button onClick={toggle}>cancelar</button>
         </form>
         </Modal>
         </>
