@@ -32,7 +32,8 @@
 }
 
 .custom-modal-content-ac{
-    background-color: #00ffd8;
+    background-color: #dffffa;
+    filter:drop-shadow(-4px 0.3rem  0.3rem);
     border-radius: 50px;
     color: rgb(3, 56, 56);
 }

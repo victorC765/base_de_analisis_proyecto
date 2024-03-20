@@ -52,10 +52,10 @@ app.post("/regiac",function(req,res)
 )
 // Example of an update endpoint in Express
 app.put('/actualizar-actividad', (req, res) => {
-    const { id_Actividades_Ejecucion, actividad, descripcion_actividad, lugar, hora_incio, hora_fin, Paquete_Turistico_id_Paquete_Turistico, categoria_id_categoria, Bitacora_id_Bitacora, cumplimiento_id_cumplimiento } = req.body;
+    const { id_actividades_ejecucion, actividad, descripcion_actividad, lugar, hora_incio, hora_fin, Paquete_Turistico_id_Paquete_Turistico, categoria_id_categoria, Bitacora_id_Bitacora, cumplimiento_id_cumplimiento } = req.body;
     // Realiza la operación de actualización en la base de datos
     // Este es un marcador de posición para tu lógica de actualización de base de datos real
-    db.query('UPDATE `actividades_ejecucion` SET `id_actividades_ejecucion`=?,`actividad`=?,`descripcion_actividad`=?,`lugar`=?,`hora_incio`=?,`hora_fin`=?,`Paquete_Turistico_id_Paquete_Turistico`=?,`categoria_id_categoria`=?,`Bitacora_id_Bitacora`=?,`cumplimiento_id_cumplimiento`=? WHERE id_actividades_ejecucion = '+id_Actividades_Ejecucion+'', [id_Actividades_Ejecucion, actividad, descripcion_actividad, lugar, hora_incio, hora_fin, Paquete_Turistico_id_Paquete_Turistico, categoria_id_categoria, Bitacora_id_Bitacora, cumplimiento_id_cumplimiento, ], (error, resultados) => {
+    db.query('UPDATE `actividades_ejecucion` SET `id_actividades_ejecucion`=?,`actividad`=?,`descripcion_actividad`=?,`lugar`=?,`hora_incio`=?,`hora_fin`=?,`Paquete_Turistico_id_Paquete_Turistico`=?,`categoria_id_categoria`=?,`Bitacora_id_Bitacora`=?,`cumplimiento_id_cumplimiento`=? WHERE id_actividades_ejecucion = '+id_actividades_ejecucion+'', [id_actividades_ejecucion, actividad, descripcion_actividad, lugar, hora_incio, hora_fin, Paquete_Turistico_id_Paquete_Turistico, categoria_id_categoria, Bitacora_id_Bitacora, cumplimiento_id_cumplimiento, ], (error, resultados) => {
         if (error) {
             console.error('Error actualizando datos:', error);
             res.status(500).send('Error actualizando datos');

@@ -9,8 +9,10 @@ import CambiosActividad from "./cambiosActividad"
 export default function Actividad(args) {
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
-  
+  const [modalc, setModalc] = useState(false);
+  const toggleca = () => setModalc(!modalc);
   const [data, setData] = useState([]);
+  const [selectedRowData, setSelectedRowData] = useState(null);
 
  useEffect(() => {
     fetch('http://localhost:3000/pepe')
@@ -37,7 +39,7 @@ export default function Actividad(args) {
         </div>
         </div>
       <Table >
-      <thead>
+      <thead  className="table-dark">
         <tr>
           <th>ID</th>
           <th>Actividad</th>
@@ -45,18 +47,23 @@ export default function Actividad(args) {
           <th>Lugar</th>
           <th>Hora Inicio</th>
           <th>Hora Fin</th>
+          <th>Accion</th>
           {/* Agrega más columnas según los datos que estés manejando */}
         </tr>
       </thead>
       <tbody>
         {data.map((item) => (
-          <tr key={item.id_Actividades_Ejecucion}>
-            <td>{item.id_Actividades_Ejecucion}</td>
+          <tr key={item.id_actividades_ejecucion}>
+            <td>{item.id_actividades_ejecucion}</td>
             <td>{item.actividad}</td>
             <td>{item.descripcion_actividad}</td>
             <td>{item.lugar}</td>
             <td>{item.hora_incio}</td>
             <td>{item.hora_fin}</td>
+             <td>
+        <CambiosActividad isOpen={modalc} toggleca={toggleca} selectedRowData={selectedRowData}></CambiosActividad>
+        <button onClick={() => { setSelectedRowData(item); toggleca(); }}>Editar</button>
+      </td>
             {/* Asegúrate de reemplazar 'id_Actividades_Ejecucion', 'actividad', etc., con los nombres reales de las columnas de tu base de datos */}
           </tr>
         ))}
@@ -64,7 +71,7 @@ export default function Actividad(args) {
       </Table>
       
       <button onClick={toggle} className="ov-btn-slide-top">Agregar</button>
-      <CambiosActividad/>
+      
     </div>
 
      
@@ -87,7 +94,7 @@ export default function Actividad(args) {
         <ModalBody>
             <div className="contain">
           <FormGroup>
-              <Label>Categoria</Label>
+           <Label>Categoria</Label>
               <Input type="select" name="catego" >
                <option value="1">deportiva</option>
                <option value="2">recreacion</option>
@@ -109,7 +116,7 @@ export default function Actividad(args) {
           </FormGroup>
           <FormGroup>
             <Label>hora inicio:</Label>
-            <Input type="time" name="horaci">  </Input>
+            <input type="time" name="horaci"/>
           </FormGroup>
           <FormGroup>
             <Label>hora final:</Label>

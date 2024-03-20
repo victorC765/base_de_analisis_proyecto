@@ -132,7 +132,6 @@ return(
             <Input
               type="time"
               name="hora"
-              rows="3"
               id="hora"
             ></Input>
           </FormGroup>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import {
  Input,
  Label,
@@ -6,12 +6,11 @@ import {
  ModalFooter,
  ModalHeader
 } from "reactstrap";
-const FormularioActualizacion = (args) => {
-    const [modal, setModal] = useState(false);
-    const toggle = () => setModal(!modal);
+const FormularioActualizacion = ({ isOpen, toggleca, selectedRowData }) => {
+   
     
     const [datosFormulario, setDatosFormulario] = useState({
-        id_Actividades_Ejecucion: '',
+        id_actividades_ejecucion: '',
         actividad: '',
         descripcion_actividad: '',
         lugar: '',
@@ -22,14 +21,20 @@ const FormularioActualizacion = (args) => {
         Bitacora_id_Bitacora: '1',
         cumplimiento_id_cumplimiento: '1'
     });
-
     const manejarCambio = (evento) => {
         setDatosFormulario({
             ...datosFormulario,
             [evento.target.name]: evento.target.value,
         });
     };
-
+    useEffect(() => {
+        if (selectedRowData) {
+          setDatosFormulario(prevState => ({
+            ...prevState,
+            ...selectedRowData
+          }));
+        }
+     }, [selectedRowData]);
     const manejarEnvio = async (evento) => {
         evento.preventDefault();
         // Llama a la función para enviar los datos al servidor
@@ -57,11 +62,10 @@ const FormularioActualizacion = (args) => {
     };
     return (
         <>
-        <button onClick={toggle}>tunometes crabra</button>
         <Modal 
-        isOpen={modal}
-        toggle={toggle}
-        {...args}
+        isOpen={isOpen}
+        toggleca={toggleca}
+        
         >
         <form onSubmit={manejarEnvio}>
             <ModalHeader>
@@ -69,8 +73,12 @@ const FormularioActualizacion = (args) => {
                 </Label>
             </ModalHeader>
             {/* Agrega campos de entrada para cada columna que desees actualizar */}
-            <Label >id:</Label>
-            <Input type="text" name="id_Actividades_Ejecucion" value={datosFormulario.id_Actividades_Ejecucion} onChange={manejarCambio} />
+            {selectedRowData && (
+      <div>
+         <Input type="text" value={datosFormulario.id_actividades_ejecucion}  onChange={manejarCambio}/>
+        {/* Add form fields here to edit the row data */}
+      </div>
+    )}
             <Label >Actividad:</Label>
             <Input type="text" name="actividad" value={datosFormulario.actividad} onChange={manejarCambio}/>
             <Label >Descripción</Label>
@@ -107,7 +115,7 @@ const FormularioActualizacion = (args) => {
             <Input type="submit" value="Actualizar" />
             </ModalFooter>
 
-            <button onClick={toggle}>cancelar</button>
+            <button onClick={toggleca}>cancelar</button>
         </form>
         </Modal>
         </>
