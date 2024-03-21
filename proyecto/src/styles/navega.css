@@ -18,6 +18,12 @@ background: linear-gradient(90deg, rgba(4,184,179,1) 0%, rgba(89,252,223,1) 29%,
   .fill {
     --color: #352dd2;
     --hover: #36115a;
+    background: none;
+    border: 2px solid;
+    font: inherit;
+    line-height: 1;
+    margin: 0.5em;
+    padding: 1em 2em;
   }
   .fill:hover,
 .fill:focus {
@@ -41,14 +47,7 @@ background: linear-gradient(90deg, rgba(4,184,179,1) 0%, rgba(89,252,223,1) 29%,
   0% {
     box-shadow: 0 0 0 0 var(--hover);
   }}
-  button {
-    background: none;
-    border: 2px solid;
-    font: inherit;
-    line-height: 1;
-    margin: 0.5em;
-    padding: 1em 2em;
-  }
+  
   .titulo {
     padding: 10px;
     color: rgb(28, 47, 49);

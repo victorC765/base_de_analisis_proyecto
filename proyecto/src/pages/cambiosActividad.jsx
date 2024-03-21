@@ -1,5 +1,6 @@
 import React, { useState,useEffect } from 'react';
 import {
+    FormGroup,
  Input,
  Label,
  Modal,
@@ -65,42 +66,55 @@ const FormularioActualizacion = ({ isOpen, toggleca, selectedRowData }) => {
         <Modal 
         isOpen={isOpen}
         toggleca={toggleca}
-        
+        backdropClassName="custom-backdropca"
+        contentClassName="custom-modal-contentca"
         >
         <form onSubmit={manejarEnvio}>
-            <ModalHeader>
+            <ModalHeader className="custom-modalHead-ac" toggle={toggleca}>
                 <Label>Cambios en Actividad
                 </Label>
             </ModalHeader>
+            <FormGroup>
             {/* Agrega campos de entrada para cada columna que desees actualizar */}
             {selectedRowData && (
       <div>
          <Input type="text" value={datosFormulario.id_actividades_ejecucion}  onChange={manejarCambio}/>
         {/* Add form fields here to edit the row data */}
       </div>
-    )}
+    )}          
+    </FormGroup>
+    <FormGroup>
             <Label >Actividad:</Label>
             <Input type="text" name="actividad" value={datosFormulario.actividad} onChange={manejarCambio}/>
+            </FormGroup>
+            <FormGroup>
             <Label >Descripción</Label>
             <Input type="textarea" name='descripcion_actividad' value={datosFormulario.descripcion_actividad} onChange={manejarCambio} />
+            </FormGroup>
+            <FormGroup>
             <Label >Lugar</Label>
             <Input type="text" name='lugar' value={datosFormulario.lugar} onChange={manejarCambio} />
- 
+            </FormGroup>
+            <FormGroup>
             <Label>
                 Inicio:
                 <Input type='time' name='hora_incio' value={datosFormulario.hora_incio} onChange={manejarCambio} />
             </Label>
+            </FormGroup>
+            <FormGroup>
             <Label>
                 Hora fin:
                 <Input type='time' name='hora_fin' value={datosFormulario.hora_fin} onChange={manejarCambio} />
             </Label>
-
+            </FormGroup>
+<FormGroup>
             <Label>
     Paquete turistico:
     <Input type='select' name='Paquete_Turistico_id_Paquete_Turistico' value={datosFormulario.Paquete_Turistico_id_Paquete_Turistico} onChange={manejarCambio}>
         <option value="1">Morrocoi</option>    
     </Input>
 </Label>
+</FormGroup>
 <Label>
     Categoria:
     <Input type='select' name='categoria_id_categoria' value={datosFormulario.categoria_id_categoria} onChange={manejarCambio}>

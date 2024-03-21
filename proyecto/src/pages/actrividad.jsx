@@ -82,18 +82,20 @@ export default function Actividad(args) {
                 <td>{item.hora_incio}</td>
                 <td>{item.hora_fin}</td>
                 <td>
+                
                   <CambiosActividad
                     isOpen={modalc}
                     toggleca={toggleca}
                     selectedRowData={selectedRowData}
                   ></CambiosActividad>
                   <button
+                  className="ebut"
                     onClick={() => {
                       setSelectedRowData(item);
                       toggleca();
                     }}
                   >
-                    Editar
+                    <img width="30" height="30" src="https://img.icons8.com/cotton/64/edit--v1.png" alt="edit--v1"/>
                   </button>
                 </td>
                 {/* Asegúrate de reemplazar 'id_Actividades_Ejecucion', 'actividad', etc., con los nombres reales de las columnas de tu base de datos */}
