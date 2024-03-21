@@ -29,7 +29,6 @@ const Layout = () => {
           </Link>
         </div>
       </nav>
-      <hr />
       <Outlet />
     </div>
   );

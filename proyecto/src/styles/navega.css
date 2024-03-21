@@ -16,8 +16,8 @@ background: linear-gradient(90deg, rgba(4,184,179,1) 0%, rgba(89,252,223,1) 29%,
     color: #fff;
   }
   .fill {
-    --color: #0d04ba;
-    --hover: #16002c;
+    --color: #352dd2;
+    --hover: #36115a;
   }
   .fill:hover,
 .fill:focus {

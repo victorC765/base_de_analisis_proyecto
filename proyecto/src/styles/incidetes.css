@@ -4,14 +4,28 @@
 {
     background-color: rgb(242, 242, 242);
     width: 100%;
-    max-width: 80%;
-    padding: 60px;
-    border-radius: 40px;
+    max-width: 100%;
+    padding: 10px 70px 70px 70px;
+    border-bottom-left-radius: 40px;
+    border-bottom-right-radius: 40px;
     opacity: 0.96;
-    margin: 80px;
-    height: 100%;
+    border: none;
+    margin: none;
     text-align: center;
     
+}
+.kin{
+    width: 100%;
+    max-width: 150vh;
+    margin: 70px;
+}
+.hjkl{
+    background-color: #4741d7;
+    border-top-left-radius: 40px;
+    border-top-right-radius: 40px;
+    text-align: center;
+    padding: 60px;
+    width: 100%;
 }
 
 .cen{
@@ -33,7 +47,7 @@
 
 .custom-modal-content-ac{
     background-color: #dffffa;
-    filter:drop-shadow(-4px 0.3rem  0.3rem);
+    filter:drop-shadow(-5px 0.3rem  0.3rem);
     border-radius: 50px;
     color: rgb(3, 56, 56);
 }
@@ -75,7 +89,7 @@
     padding: 15px;
 }
 .coin{
-    
+    justify-content: space-between;
     display : flex;
    padding: 20px;
 }
@@ -93,7 +107,7 @@
     background: #fff; /* color de fondo */
     color: #4741d7; /* color de fuente */
     border: 2px solid #4741d7; /* tamaño y color de borde */
-    padding: 16px 20px;
+    padding: 18px 45px;
     border-radius: 3px; /* redondear bordes */
     position: relative;
     z-index: 1;

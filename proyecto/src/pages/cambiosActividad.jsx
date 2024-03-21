@@ -112,10 +112,11 @@ const FormularioActualizacion = ({ isOpen, toggleca, selectedRowData }) => {
 </Label>
     <ModalFooter>
             {/* Repite para cada campo */}
-            <Input type="submit" value="Actualizar" />
+            <button type="submit" onClick={toggleca}>Actualizar</button>
+            <button onClick={toggleca}>cancelar</button>
             </ModalFooter>
 
-            <button onClick={toggleca}>cancelar</button>
+           
         </form>
         </Modal>
         </>
