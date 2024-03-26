@@ -1,5 +1,6 @@
-import { useState,  useEffect  } from "react";
-import inc from "../assets/incidente.png"
+import { useState, useEffect } from "react";
+import { format } from "date-fns";
+import inc from "../assets/incidente.png";
 import {
   Modal,
   Table,
@@ -7,64 +8,111 @@ import {
   ModalBody,
   ModalHeader,
   Label,
+  FormFeedback,
   FormGroup,
   Input,
-  Button
+  Button,
 } from "reactstrap";
 import "../styles/incidetes.css";
 
+import CambiosIncidente from "./cambiosIncidente";
 export default function Incidente(args) {
   const [modal, setModal] = useState(false);
-  const toggle = () => {setModal(!modal);}
+  const toggle = () => {
+    setModal(!modal);
+  };
 
   const [data, setData] = useState([]);
 
- useEffect(() => {
-    fetch('http://localhost:3000/inci')
-      .then(response => response.json())
-      .then(data => setData(data))
-      .catch(error => console.error('Error fetching data:', error));
- }, []);
-return(
-  
-  <div >
-    <div className="cen">
-      <div className="ta">
+  const [modalc, setModalc] = useState(false);
+  const toggleca = () => setModalc(!modalc);
+  const [selectedRowData, setSelectedRowData] = useState(null);
 
-        <h1>Incidentes</h1>
-          
-    <div className="m">
-    <Label>Paquete Turistico:</Label>
-      <Input type="select" name="pt" placeholder="pt" id="pt">
-        <option>Morrocoi</option>
-        </Input>
+  const [incidente, setIncidente] = useState("");
+  const [fecha, setFecha] = useState("");
+  const [hora, setHora] = useState("");
+  const [ubicacion, setUbicacion] = useState("");
+  const [descripcion, setDescripcion] = useState("");
+
+  const todosLosCamposLlenos =
+    incidente !== "" &&
+    descripcion !== "" &&
+    fecha !== "" &&
+    hora !== "" &&
+    ubicacion !== "";
+
+  useEffect(() => {
+    fetch("http://localhost:3000/inci")
+      .then((response) => response.json())
+      .then((data) => setData(data))
+      .catch((error) => console.error("Error fetching data:", error));
+  }, []);
+  return (
+    <div>
+      <div className="cen">
+        <div className="kin">
+          <div className="keke">
+            <h1>Incidentes</h1>
+          </div>
+          <div className="ta">
+            <div className="m">
+              <Label>Paquete Turistico:</Label>
+              <Input type="select" name="pt" placeholder="pt" id="pt">
+                <option>Morrocoi</option>
+              </Input>
+              <button className="ov-btn-slide-top" onClick={toggle}>
+                Crear
+              </button>
+            </div>
+            <Table size="sm">
+              <thead>
+                <tr className="table-dark">
+                  <th>Id</th>
+                  <th>incidente</th>
+                  <th>descripción</th>
+                  <th>fecha de reporte</th>
+                  <th>hora</th>
+                  <th>ubicacion</th>
+                  <th>accción</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.map((item) => (
+                  <tr key={item.id_incidentes}>
+                    <td>{item.id_incidentes}</td>
+                    <td>{item.tipo_incidencia}</td>
+                    <td>{item.descripcion_incidente}</td>
+                    <td>{format(new Date(item.fecha), "dd/MM/yyyy")}</td>
+                    <td>{item.hora}</td>
+                    <td>{item.ubicacion}</td>
+                    <td>
+                      <CambiosIncidente
+                        isOpen={modalc}
+                        toggleca={toggleca}
+                        selectedRowData={selectedRowData}
+                      ></CambiosIncidente>
+                      <button
+                        className="ebuti"
+                        onClick={() => {
+                          setSelectedRowData(item);
+                          toggleca();
+                        }}
+                      >
+                        {" "}
+                        <img
+                          width="30"
+                          height="30"
+                          src="https://img.icons8.com/cotton/64/edit--v1.png"
+                          alt="edit--v1"
+                        />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </div>
         </div>
-        <Table size="sm">
-          <thead>
-            <tr className="table-dark">
-              <th className="p-4">descripción</th>
-              <th className="p-4">fecha de reporte</th>
-              <th className="p-4">hora</th>
-                <th className="p-4">ubicacion</th>
-              <th className="p-4">accción</th>
-            </tr>
-          </thead>
-          <tbody>
-          {data.map((item, index) => (
-          <tr key={index}>
-              <td>{item.descripcion_incidente}</td>
-              <td>{item.fecha}</td>
-              <td>{item.hora}</td>
-              <td>{item.ubicacion}</td>
-            </tr>
-          ))}
-        </tbody>
-        </Table>
-        <button className="ov-btn-slide-top" onClick={toggle}>
-        Crear
-      </button>
-      </div>
-      
       </div>
       <Modal
         isOpen={modal}
@@ -72,85 +120,149 @@ return(
         {...args}
         centered
         backdropClassName="custom-backdrop" // Clase personalizada para el backdrop
-        contentClassName="custom-modal-content" 
-       
-        >
-          <form action="/validar" method="post">
-        <ModalHeader className="custom-modalHead" toggle={toggle}>
-          <div className="gh">
-          <img src={inc} width="35" height="35" /><h3 className="hen">Registrar Incidente</h3>
-          </div>
-        </ModalHeader>
-        
-        <ModalBody>
-            <div className="contain">
-          <FormGroup>
-            <Label>Incidente:</Label>
-            <Input
-              type="select"
-              placeholder="incidente"
-              name="incidente"
-              id="incidente"
-            >
-              <option value="1">Incidentes relacionados con el transporte</option>
-              <option value="2">Incidentes relacionados con el alojamiento</option>
-              <option value="3">Incidentes relacionados con las actividades</option>
-              <option value="4">Incidentes relacionados con la salud</option>
-              <option value="5">Otro</option>
-            </Input>
-          </FormGroup>
-          
-          <FormGroup>
-            <Label>Descripción</Label>
-            <Input
-              type="textarea"
-              name="descripcion"
-              rows="3"
-              id="descripcion"
-            />
-          </FormGroup>
-      
-          <FormGroup>
-            <Label>Ubicación</Label>
-            <Input
-              type="text"
-              name="ubicacion"
-              id="ubicacion"/>
-          </FormGroup>
-          <FormGroup>
-            <Label>Fecha:</Label>
-            <Input
-              type="date"
-              name="fecha"
-              id="fecha"
-            
-            ></Input>
-          </FormGroup>
-         
-          <FormGroup>
-            <Label>Hora::</Label>
-            <Input
-              type="time"
-              name="hora"
-              id="hora"
-            ></Input>
-          </FormGroup>
-          </div>
-        </ModalBody>
-        <ModalFooter>
-          <Button color="primary" onClick={toggle} type="submit" >
-            Registrar
-          </Button>{" "}
-          <Button color="secondary" onClick={toggle}>
-            Cancel
-          </Button>
-       
-        </ModalFooter>
-        </form>
-      
-      </Modal>
-    
-    </div>
-)
+        contentClassName="custom-modal-content"
+      >
+        <form action="/validar" method="post">
+          <ModalHeader className="custom-modalHead" toggle={toggle}>
+            <div className="gh">
+              <img src={inc} width="35" height="35" />
+              <h3 className="hen">Registrar Incidente</h3>
+            </div>
+          </ModalHeader>
 
+          <ModalBody>
+            <div className="contain">
+              <FormGroup>
+                <Label>Incidente:</Label>
+                <Input
+                  type="select"
+                  placeholder="incidente"
+                  name="incidente"
+                  value={incidente}
+                  onChange={(e) => setIncidente(e.target.value)}
+                  invalid={incidente === ""}
+                  valid={incidente !== ""}
+                  id="incidente"
+                >
+                  <option value="1">
+                    Incidentes relacionados con el transporte
+                  </option>
+                  <option value="2">
+                    Incidentes relacionados con el alojamiento
+                  </option>
+                  <option value="3">
+                    Incidentes relacionados con las actividades
+                  </option>
+                  <option value="4">
+                    Incidentes relacionados con la salud
+                  </option>
+                  <option value="5">Otro</option>
+                </Input>
+                <FormFeedback invalid>
+                  tienes que llenar este campo
+                </FormFeedback>
+                <FormFeedback valid>
+                  {" "}
+                  campo rellenado correctamente
+                </FormFeedback>
+              </FormGroup>
+
+              <FormGroup>
+                <Label>Descripción</Label>
+                <Input
+                  type="textarea"
+                  name="descripcion"
+                  value={descripcion}
+                  onChange={(e) => setDescripcion(e.target.value)}
+                  invalid={descripcion === ""}
+                  valid={descripcion !== ""}
+                  rows="3"
+                  id="descripcion"
+                />{" "}
+                <FormFeedback invalid>
+                  tienes que llenar este campo
+                </FormFeedback>
+                <FormFeedback valid>
+                  {" "}
+                  campo rellenado correctamente
+                </FormFeedback>
+              </FormGroup>
+
+              <FormGroup>
+                <Label>Ubicación</Label>
+                <Input
+                  type="text"
+                  name="ubicacion"
+                  value={ubicacion}
+                  onChange={(e) => setUbicacion(e.target.value)}
+                  invalid={ubicacion === ""}
+                  valid={ubicacion !== ""}
+                  id="ubicacion"
+                />{" "}
+                <FormFeedback invalid>
+                  tienes que llenar este campo
+                </FormFeedback>
+                <FormFeedback valid>
+                  {" "}
+                  campo rellenado correctamente
+                </FormFeedback>
+              </FormGroup>
+              <FormGroup>
+                <Label>Fecha:</Label>
+                <Input
+                  type="date"
+                  name="fecha"
+                  value={fecha}
+                  onChange={(e) => setFecha(e.target.value)}
+                  invalid={fecha === ""}
+                  valid={fecha !== ""}
+                  id="fecha"
+                ></Input>{" "}
+                <FormFeedback invalid>
+                  tienes que llenar este campo
+                </FormFeedback>
+                <FormFeedback valid>
+                  {" "}
+                  campo rellenado correctamente
+                </FormFeedback>
+              </FormGroup>
+
+              <FormGroup>
+                <Label>Hora::</Label>
+                <Input
+                  type="time"
+                  name="hora"
+                  value={hora}
+                  onChange={(e) => setHora(e.target.value)}
+                  invalid={hora === ""}
+                  valid={hora !== ""}
+                  id="hora"
+                ></Input>{" "}
+                <FormFeedback invalid>
+                  tienes que llenar este campo
+                </FormFeedback>
+                <FormFeedback valid>
+                  {" "}
+                  campo rellenado correctamente
+                </FormFeedback>
+              </FormGroup>
+            </div>
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              color="primary"
+              onClick={toggle}
+              disabled={!todosLosCamposLlenos}
+              type="submit"
+            >
+              Registrar
+            </Button>{" "}
+            <Button color="secondary" onClick={toggle}>
+              Cancel
+            </Button>
+          </ModalFooter>
+        </form>
+      </Modal>
+    </div>
+  );
 }
