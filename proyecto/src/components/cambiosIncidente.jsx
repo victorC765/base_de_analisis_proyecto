@@ -74,12 +74,19 @@ const FormularioActualizacionIncidentes = ({
       console.error("Error:", error);
     }
   };
+  const [act, setAct] = useState([]);
+  useEffect(() => {
+    fetch("http://localhost:3000/pepe")
+      .then((response) => response.json())
+      .then((act) => setAct(act))
+      .catch((error) => console.error("Error fetching data:", error));
+  }, []);
   return (
     <>
       <Modal
         isOpen={isOpen}
         toggleca={toggleca}
-        backdropClassName="custom-backdrop"
+        backdropClassName="custom-backdropinc"
         contentClassName="custom-modal-content"
       >
         <form onSubmit={manejarEnvio}>
@@ -218,6 +225,17 @@ const FormularioActualizacionIncidentes = ({
                   {" "}
                   campo rellenado correctamente
                 </FormFeedback>
+              </FormGroup>
+              <FormGroup>
+                <Label>relaciona el incidente a una actividad</Label>
+                <Input type="select"
+                name="incidentexactividad"
+                >
+                  <option value="">selecione una actividad</option>
+                {act.map((item,index) =>(
+                <option key={index} value={item.id_actividades_ejecucion}>{item.actividad}</option>
+                ))}
+                </Input>
               </FormGroup>
             </div>
           </ModalBody>

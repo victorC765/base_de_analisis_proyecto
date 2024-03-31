@@ -15,7 +15,7 @@ import {
 } from "reactstrap";
 import "../styles/incidetes.css";
 
-import CambiosIncidente from "./cambiosIncidente";
+import CambiosIncidente from "../components/cambiosIncidente";
 export default function Incidente(args) {
   const [modal, setModal] = useState(false);
   const toggle = () => {
@@ -33,41 +33,52 @@ export default function Incidente(args) {
   const [hora, setHora] = useState("");
   const [ubicacion, setUbicacion] = useState("");
   const [descripcion, setDescripcion] = useState("");
+  const [hasError, setHasError] = useState(false);
+  
+
+
 
   const todosLosCamposLlenos =
     incidente !== "" &&
     descripcion !== "" &&
     fecha !== "" &&
     hora !== "" &&
-    ubicacion !== "";
+    ubicacion !== "" ;
 
+ 
   useEffect(() => {
-    fetch("http://localhost:3000/inci")
-      .then((response) => response.json())
-      .then((data) => setData(data))
-      .catch((error) => console.error("Error fetching data:", error));
+    const fetchData = async () => {
+      setHasError(false);
+      try {
+        const res = await fetch("http://localhost:3000/inci");
+        const json = await res.json();
+        setData(json);
+      } catch (error) {
+        setHasError(true);
+      }
+    };
+    fetchData();
   }, []);
+
+
   return (
     <div>
       <div className="cen">
         <div className="kin">
           <div className="keke">
+          <img width="70" height="70" src="https://img.icons8.com/external-flaticons-lineal-color-flat-icons/64/external-incident-emergency-services-flaticons-lineal-color-flat-icons-2.png" alt="external-incident-emergency-services-flaticons-lineal-color-flat-icons-2"/>
             <h1>Incidentes</h1>
           </div>
           <div className="ta">
             <div className="m">
-              <Label>Paquete Turistico:</Label>
-              <Input type="select" name="pt" placeholder="pt" id="pt">
-                <option>Morrocoi</option>
-              </Input>
               <button className="ov-btn-slide-top" onClick={toggle}>
                 Crear
               </button>
             </div>
-            <Table size="sm">
+            <Table hover striped>
               <thead>
-                <tr className="table-dark">
-                  <th>Id</th>
+                <tr className="table-success" size="lg">
+                  <th>#</th>
                   <th>incidente</th>
                   <th>descripción</th>
                   <th>fecha de reporte</th>
@@ -228,7 +239,7 @@ export default function Incidente(args) {
               </FormGroup>
 
               <FormGroup>
-                <Label>Hora::</Label>
+                <Label>Hora:</Label>
                 <Input
                   type="time"
                   name="hora"
@@ -246,6 +257,7 @@ export default function Incidente(args) {
                   campo rellenado correctamente
                 </FormFeedback>
               </FormGroup>
+             
             </div>
           </ModalBody>
           <ModalFooter>

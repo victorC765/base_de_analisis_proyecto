@@ -1,8 +1,8 @@
 .nab{
   background: rgb(4,184,179);
-background: linear-gradient(90deg, rgba(4,184,179,1) 0%, rgba(89,252,223,1) 29%, rgba(80,255,244,1) 41%, rgba(88,255,245,1) 55%, rgba(196,239,240,1) 78%); 
+background: linear-gradient(90deg, rgba(4,184,179,1) 0%, rgba(89,252,223,1) 29%); 
     justify-content: space-between;
-    padding: 28px;
+    padding: 17px;
     width: 100%;
     display: flex;
 }
@@ -49,7 +49,8 @@ background: linear-gradient(90deg, rgba(4,184,179,1) 0%, rgba(89,252,223,1) 29%,
   }}
   
   .titulo {
-    padding: 10px;
+    font-size: 33px;
+    padding: 8px;
     color: rgb(28, 47, 49);
   }
   .ssd{

@@ -17,22 +17,23 @@
 .kin{
     width: 100%;
     max-width: 150vh;
-    margin: 70px;
+    margin: 50px;
 }
 .hjkl{
     background-color: #4741d7;
     border-top-left-radius: 40px;
     border-top-right-radius: 40px;
+    color: #f2e9ff;
     text-align: center;
-    padding: 60px;
+    padding: 30px;
     width: 100%;
 }
 .keke{
-    background-color: #00baa9;
+    background-color: #1ed1c2;
     border-top-left-radius: 40px;
     border-top-right-radius: 40px;
     text-align: center;
-    padding: 60px;
+    padding: 30px;
     width: 100%;
 }
 .cen{
@@ -89,7 +90,10 @@
     color: rgb(28, 4, 44);
 }
 .custom-backdrop{
-    background-color: #11022533;
+    background-color: #250a47;
+}
+.custom-backdropinc{
+    background-color: #250a4728;
 }
 .custom-modalHead{
     text-align: center;
@@ -158,7 +162,7 @@
     background-color: rgb(97, 255, 176);
     padding: 10px;
     border: none;
-    border-radius: 50px;
+    border-radius: 12px;
     filter:drop-shadow(5px 0.3rem  0.3rem rgb(7, 146, 104));
   }
   .ebut:hover{
@@ -169,7 +173,7 @@
     background-color: #4741d7;
     padding: 10px;
     border: none;
-    border-radius: 50px;
+    border-radius: 12px;
     filter:drop-shadow(5px 0.3rem  0.3rem rgb(23, 10, 77));
   }
   .ebuti:hover{

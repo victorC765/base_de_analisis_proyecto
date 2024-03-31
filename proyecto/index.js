@@ -11,17 +11,39 @@ const app = express();
 // Define las rutas estáticas
 app.use(express.static(path.join(__dirname, 'dist')));
 
+
+let almacen = '';
 // Asegúrate de que esta ruta esté definida antes de cualquier otra ruta que pueda coincidir con la solicitud
-app.get('/pepe', (req, res) => {
-   db.query('SELECT ae.id_actividades_ejecucion, ae.actividad, ae.descripcion_actividad, ae.lugar, ae.hora_incio, ae.hora_fin, ae.Paquete_Turistico_id_Paquete_Turistico, ae.categoria_id_categoria,cu.estado  FROM actividades_ejecucion ae JOIN cumplimiento cu ON cu.id_cumplimiento = ae.cumplimiento_id_cumplimiento;', (err, results) => {
-      if (err) {
-          console.error('Error al ejecutar la consulta:', err);
-          throw err;
-      }
-   
-      res.json(results);
+app.post("/regiac",function(req,res)
+  {
+    const {  id_Paquete_Turistico } = req.body;
+    almacen =  id_Paquete_Turistico;
+    
+    res.send('Mensaje almacenado con éxito.');
+    return almacen;
+  })
+    app.get('/pepe', (req, res) => {
+       
+        db.query('SELECT ae.id_actividades_ejecucion, ae.actividad, ae.descripcion_actividad, ae.lugar, ae.hora_incio, ae.hora_fin, ae.Paquete_Turistico_id_Paquete_Turistico, ae.categoria_id_categoria,cu.estado  FROM actividades_ejecucion ae JOIN cumplimiento cu ON cu.id_cumplimiento = ae.cumplimiento_id_cumplimiento WHERE  ae.Paquete_Turistico_id_Paquete_Turistico = "'+almacen+'" ', (err, results) => {
+           if (err) {
+               console.error('Error al ejecutar la consulta:', err);
+               throw err;
+           }
+        
+           res.json(results);
+      });
+     });
+ 
+app.get('/pts', (req, res) => {
+    db.query('SELECT * FROM `paquete_turistico` WHERE 1', (err, results) => {
+       if (err) {
+           console.error('Error al ejecutar la consulta:', err);
+           throw err;
+       }
+    
+       res.json(results);
+  });
  });
-});
 app.get('/inci', (req, res) => {
    db.query('SELECT i.id_incidentes, i.descripcion_incidente, i.Paquete_Turistico_id_Paquete_Turistico, i.tipo_incidencia_id_tipo_incidencia, i.fecha, i.hora, i.ubicacion, ti.tipo_incidencia FROM incidentes i JOIN tipo_incidencia ti ON ti.id_tipo_incidencia = i.tipo_incidencia_id_tipo_incidencia ORDER BY i.id_incidentes ASC;', (err, results) => {
       if (err) {
@@ -32,6 +54,7 @@ app.get('/inci', (req, res) => {
       res.json(results);
  });
 });
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -51,7 +74,7 @@ app.post("/regiac",function(req,res)
   }
 )
 app.put('/actualizar-incidente', (req, res) => {
-    const { id_incidentes,incidente, descripcion_incidente, ubicacion, Paquete_Turistico_id_Paquete_Turistico,hora,fecha, } = req.body;
+    const { id_incidentes,incidente, descripcion_incidente, ubicacion, Paquete_Turistico_id_Paquete_Turistico,hora,fecha,incidentexactividad } = req.body;
     // Realiza la operación de actualización en la base de datos
     // Este es un marcador de posición para tu lógica de actualización de base de datos real
     db.query('UPDATE `incidentes` SET `id_incidentes`=?,`descripcion_incidente`=?,`Paquete_Turistico_id_Paquete_Turistico`=?,`tipo_incidencia_id_tipo_incidencia`=?,`fecha`=?,`hora`=?,`ubicacion`=? WHERE id_incidentes = '+id_incidentes+'', [id_incidentes,descripcion_incidente,Paquete_Turistico_id_Paquete_Turistico,incidente,fecha,hora,ubicacion ], (error, resultados) => {
@@ -62,6 +85,15 @@ app.put('/actualizar-incidente', (req, res) => {
             res.status(200).send('Datos actualizados exitosamente');
         }
     });
+    let inac="INSERT INTO `incidentes_x_actividades`(`id_incidentes_x_actividades_ejecucion`, `incidentes_id_incidentes`, `actividades_ejecucion_id_actividades_ejecución`)VALUES ('"+incidentexactividad +"','"+id_incidentes+"')"
+    db.query(inac,function(error){
+      if(error){
+          console.log(error);
+      }else{
+          console.log("Registro exitoso");
+      }      
+  });
+
 });
 
 // Example of an update endpoint in Express
@@ -91,6 +123,11 @@ app.post("/validar",function(req,res)
           console.log("Registro exitoso");
       }      
   });
+
+   
+
+
+
   })
 
 // Ahora define la ruta que maneja todas las solicitudes

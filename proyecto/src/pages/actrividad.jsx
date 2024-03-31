@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import {
   Modal,
   ModalFooter,
@@ -15,7 +14,7 @@ import {
 } from "reactstrap";
 import "../styles/incidetes.css";
 import ima from "../assets/lista-de-quehaceres.png";
-import CambiosActividad from "./cambiosActividad";
+import CambiosActividad from "../components/cambiosActividad";
 
 export default function Actividad(args) {
   //variable de la modal para ingresar actividad
@@ -36,8 +35,8 @@ export default function Actividad(args) {
   const [horaci, setHoraci] = useState("");
   const [horacfc, setHoracfc] = useState("");
   const [pt, setPt] = useState("");
- 
- 
+  const [paquete, setPaquete] = useState("");
+
   const todosLosCamposLlenos =
     actividad !== "" &&
     catego !== "" &&
@@ -53,41 +52,53 @@ export default function Actividad(args) {
       .then((data) => setData(data))
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
-
+  useEffect(() => {
+    fetch("http://localhost:3000/pts")
+      .then((response) => response.json())
+      .then((paquete) => setPaquete(paquete))
+      .catch((error) => console.error("Error fetching data:", error));
+  }, []);
   return (
     <div className="cen">
       {/*contenedor de la tabla de actividades*/}
       <div className="kin">
         <div className="hjkl">
+          <img
+            width="70"
+            height="70"
+            src="https://img.icons8.com/color/48/skiing.png"
+            alt="skiing"
+          />
           <h1>Actividades</h1>
         </div>
         <div className="ta">
           <div className="coin">
-            <div className="m">
-              <Label>Paquete Turistico:</Label>
-              <Input type="select" name="pt" placeholder="pt" id="pt">
-                <option>Morrocoi</option>
-              </Input>
-            </div>
             <div>
               <button onClick={toggle} className="ov-btn-slide-top">
                 Agregar
               </button>
             </div>
             <div>
-              <input
-                className="bus"
-                type="text"
-                name="buscar"
-                id="buscar"
-                placeholder="🔍 buscar"
-              />
+              <form action="/pepe" method="get">
+                <Input  type="select" name="buscar" id="buscar">
+                  <option value="">selecione un paquete turistico</option>
+                  {paquete &&
+                    paquete.map((item, index) => (
+                      <option key={index} value={item.id_Paquete_Turistico}>
+                        {item.nombre}
+                      </option>
+                    ))}
+                </Input>
+                <button type="submit" className="ov-btn-slide-top">
+                  Buscar
+                </button>
+              </form>
             </div>
           </div>
-          <Table>
-            <thead className="table-dark">
+          <Table hover striped>
+            <thead className="table-primary" size="lg">
               <tr>
-                <th>ID</th>
+                <th>#</th>
                 <th>Actividad</th>
                 <th>Descripción</th>
                 <th>Lugar</th>
@@ -108,7 +119,7 @@ export default function Actividad(args) {
                   <td>{item.hora_incio}</td>
                   <td>{item.hora_fin}</td>
                   <td>{item.estado}</td>
-                
+
                   <td>
                     <ButtonGroup>
                       <CambiosActividad
@@ -130,9 +141,6 @@ export default function Actividad(args) {
                           alt="edit--v1"
                         />
                       </button>
-                      <Link to={`../incidente`}>
-                        <button>Ir a Nueva Página</button>
-                      </Link>
                     </ButtonGroup>
                   </td>
 
@@ -177,7 +185,7 @@ export default function Actividad(args) {
                     name="catego"
                     onChange={(e) => setCatego(e.target.value)}
                     invalid={catego === ""}
-                  valid={catego !== ""}
+                    valid={catego !== ""}
                   >
                     <option value="1">deportiva</option>
                     <option value="2">recreacion</option>
@@ -185,12 +193,12 @@ export default function Actividad(args) {
                     <option value="4">riesgo</option>
                   </Input>
                   <FormFeedback invalid>
-                  tienes que llenar este campo
-                </FormFeedback>
-                <FormFeedback valid>
-                  {" "}
-                  campo rellenado correctamente
-                </FormFeedback>
+                    tienes que llenar este campo
+                  </FormFeedback>
+                  <FormFeedback valid>
+                    {" "}
+                    campo rellenado correctamente
+                  </FormFeedback>
                 </FormGroup>
                 <FormGroup>
                   <Label>
@@ -211,13 +219,13 @@ export default function Actividad(args) {
                     invalid={actividad === ""}
                     valid={actividad !== ""}
                   />
-                   <FormFeedback invalid>
-                  tienes que llenar este campo
-                </FormFeedback>
-                <FormFeedback valid>
-                  {" "}
-                  campo rellenado correctamente
-                </FormFeedback>
+                  <FormFeedback invalid>
+                    tienes que llenar este campo
+                  </FormFeedback>
+                  <FormFeedback valid>
+                    {" "}
+                    campo rellenado correctamente
+                  </FormFeedback>
                 </FormGroup>
                 <FormGroup>
                   <Label>
@@ -237,13 +245,13 @@ export default function Actividad(args) {
                     invalid={descripcionac === ""}
                     valid={descripcionac !== ""}
                   />
-                    <FormFeedback invalid>
-                  tienes que llenar este campo
-                </FormFeedback>
-                <FormFeedback valid>
-                  {" "}
-                  campo rellenado correctamente
-                </FormFeedback>
+                  <FormFeedback invalid>
+                    tienes que llenar este campo
+                  </FormFeedback>
+                  <FormFeedback valid>
+                    {" "}
+                    campo rellenado correctamente
+                  </FormFeedback>
                 </FormGroup>
                 <FormGroup>
                   <Label>
@@ -263,15 +271,14 @@ export default function Actividad(args) {
                     onChange={(e) => setUbicacionac(e.target.value)}
                     invalid={ubicacionac === ""}
                     valid={ubicacionac !== ""}
-                    
                   />
-                    <FormFeedback invalid>
-                  tienes que llenar este campo
-                </FormFeedback>
-                <FormFeedback valid>
-                  {" "}
-                  campo rellenado correctamente
-                </FormFeedback>
+                  <FormFeedback invalid>
+                    tienes que llenar este campo
+                  </FormFeedback>
+                  <FormFeedback valid>
+                    {" "}
+                    campo rellenado correctamente
+                  </FormFeedback>
                 </FormGroup>
                 <FormGroup>
                   <Label>
@@ -291,15 +298,14 @@ export default function Actividad(args) {
                     onChange={(e) => setHoraci(e.target.value)}
                     invalid={horaci === ""}
                     valid={horaci !== ""}
-
                   />
-                    <FormFeedback invalid>
-                  tienes que llenar este campo
-                </FormFeedback>
-                <FormFeedback valid>
-                  {" "}
-                  campo rellenado correctamente
-                </FormFeedback>
+                  <FormFeedback invalid>
+                    tienes que llenar este campo
+                  </FormFeedback>
+                  <FormFeedback valid>
+                    {" "}
+                    campo rellenado correctamente
+                  </FormFeedback>
                 </FormGroup>
                 <FormGroup>
                   <Label>
@@ -318,17 +324,16 @@ export default function Actividad(args) {
                     onChange={(e) => setHoracfc(e.target.value)}
                     value={horacfc}
                     invalid={horacfc === ""}
-
                   >
                     {" "}
                   </Input>
                   <FormFeedback invalid>
-                  tienes que llenar este campo
-                </FormFeedback>
-                <FormFeedback valid>
-                  {" "}
-                  campo rellenado correctamente
-                </FormFeedback>
+                    tienes que llenar este campo
+                  </FormFeedback>
+                  <FormFeedback valid>
+                    {" "}
+                    campo rellenado correctamente
+                  </FormFeedback>
                 </FormGroup>
                 <FormGroup>
                   <Label>paquete turistico:</Label>
@@ -339,18 +344,17 @@ export default function Actividad(args) {
                     invalid={pt === ""}
                     valid={pt !== ""}
                   >
-                     <option value="1">Morrocoi</option>
+                    <option value="1">Morrocoi</option>
                     <option value="2">Margarita</option>
                     <option value="3">Avila</option>
                   </Input>
                   <FormFeedback invalid>
-                  tienes que llenar este campo
-                </FormFeedback>
-                <FormFeedback valid>
-                  {" "}
-                  campo rellenado correctamente
-                </FormFeedback>
-                
+                    tienes que llenar este campo
+                  </FormFeedback>
+                  <FormFeedback valid>
+                    {" "}
+                    campo rellenado correctamente
+                  </FormFeedback>
                 </FormGroup>
               </div>
             </ModalBody>
