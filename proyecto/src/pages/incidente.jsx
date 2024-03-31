@@ -34,18 +34,17 @@ export default function Incidente(args) {
   const [ubicacion, setUbicacion] = useState("");
   const [descripcion, setDescripcion] = useState("");
   const [hasError, setHasError] = useState(false);
-  
-
-
-
+  const [paquete, setPaquete] = useState("")
+  const [pt, setPt] = useState("")
   const todosLosCamposLlenos =
     incidente !== "" &&
     descripcion !== "" &&
     fecha !== "" &&
     hora !== "" &&
-    ubicacion !== "" ;
+    ubicacion !== "" &&
+    pt !== ""
+    ;
 
- 
   useEffect(() => {
     const fetchData = async () => {
       setHasError(false);
@@ -59,21 +58,54 @@ export default function Incidente(args) {
     };
     fetchData();
   }, []);
-
+  useEffect(() => {
+    fetch("http://localhost:3000/pts")
+      .then((response) => response.json())
+      .then((paquete) => setPaquete(paquete))
+      .catch((error) => console.error("Error fetching data:", error));
+  }, []);
 
   return (
     <div>
       <div className="cen">
         <div className="kin">
           <div className="keke">
-          <img width="70" height="70" src="https://img.icons8.com/external-flaticons-lineal-color-flat-icons/64/external-incident-emergency-services-flaticons-lineal-color-flat-icons-2.png" alt="external-incident-emergency-services-flaticons-lineal-color-flat-icons-2"/>
+            <img
+              width="70"
+              height="70"
+              src="https://img.icons8.com/external-flaticons-lineal-color-flat-icons/64/external-incident-emergency-services-flaticons-lineal-color-flat-icons-2.png"
+              alt="external-incident-emergency-services-flaticons-lineal-color-flat-icons-2"
+            />
             <h1>Incidentes</h1>
           </div>
           <div className="ta">
             <div className="m">
-              <button className="ov-btn-slide-top" onClick={toggle}>
-                Crear
+            <div className="coin">
+            <div>
+              <button onClick={toggle} className="ov-btn-slide-top">
+                + Agregar
               </button>
+            </div>
+            <div>
+              <form action="/inlist" method="post">
+                <div className="gh">
+              <img width="50" height="50" src="https://img.icons8.com/stickers/100/palm-tree.png" alt="palm-tree"/>
+                <Input  type="select" name="pt">
+                  <option value="">selecione un paquete turistico</option>
+                  {paquete &&
+                    paquete.map((item, index) => (
+                      <option key={index} value={item.id_Paquete_Turistico}>
+                        {item.nombre}
+                      </option>
+                    ))}
+                </Input>
+                <Button type="submit">
+                 🔍
+                </Button>
+                </div>
+              </form>
+            </div>
+          </div>
             </div>
             <Table hover striped>
               <thead>
@@ -144,6 +176,7 @@ export default function Incidente(args) {
           <ModalBody>
             <div className="contain">
               <FormGroup>
+                <img src={inc} width="30" height="30" />
                 <Label>Incidente:</Label>
                 <Input
                   type="select"
@@ -179,7 +212,13 @@ export default function Incidente(args) {
               </FormGroup>
 
               <FormGroup>
-                <Label>Descripción</Label>
+                <img
+                  width="30"
+                  height="30"
+                  src="https://img.icons8.com/external-flaticons-lineal-color-flat-icons/64/external-description-copywriting-flaticons-lineal-color-flat-icons-2.png"
+                  alt="external-description-copywriting-flaticons-lineal-color-flat-icons-2"
+                />
+                <Label>Descripción:</Label>
                 <Input
                   type="textarea"
                   name="descripcion"
@@ -200,7 +239,13 @@ export default function Incidente(args) {
               </FormGroup>
 
               <FormGroup>
-                <Label>Ubicación</Label>
+                <img
+                  width="30"
+                  height="30"
+                  src="https://img.icons8.com/cotton/64/location--v1.png"
+                  alt="location--v1"
+                />
+                <Label>Ubicación:</Label>
                 <Input
                   type="text"
                   name="ubicacion"
@@ -219,6 +264,12 @@ export default function Incidente(args) {
                 </FormFeedback>
               </FormGroup>
               <FormGroup>
+                <img
+                  width="30"
+                  height="30"
+                  src="https://img.icons8.com/fluency/48/calendar--v1.png"
+                  alt="calendar--v1"
+                />
                 <Label>Fecha:</Label>
                 <Input
                   type="date"
@@ -239,6 +290,12 @@ export default function Incidente(args) {
               </FormGroup>
 
               <FormGroup>
+                <img
+                  width="30"
+                  height="30"
+                  src="https://img.icons8.com/dusk/64/clock--v1.png"
+                  alt="clock--v1"
+                />
                 <Label>Hora:</Label>
                 <Input
                   type="time"
@@ -257,7 +314,25 @@ export default function Incidente(args) {
                   campo rellenado correctamente
                 </FormFeedback>
               </FormGroup>
-             
+              <FormGroup>
+              <Input  type="select" name="pt" value={pt}  onChange={(e) => setPt(e.target.value)} invalid={pt === ""}
+                  valid={pt!== ""} >
+                  <option value="">selecione un paquete turistico</option>
+                  {paquete &&
+                    paquete.map((item, index) => (
+                      <option key={index} value={item.id_Paquete_Turistico}>
+                        {item.nombre}
+                      </option>
+                    ))}
+                </Input>
+                <FormFeedback invalid>
+                  tienes que llenar este campo
+                </FormFeedback>
+                <FormFeedback valid>
+                  {" "}
+                  campo rellenado correctamente
+                </FormFeedback>
+              </FormGroup>
             </div>
           </ModalBody>
           <ModalFooter>

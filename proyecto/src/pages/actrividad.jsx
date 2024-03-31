@@ -75,12 +75,14 @@ export default function Actividad(args) {
           <div className="coin">
             <div>
               <button onClick={toggle} className="ov-btn-slide-top">
-                Agregar
+                + Agregar
               </button>
             </div>
             <div>
-              <form action="/pepe" method="get">
-                <Input  type="select" name="buscar" id="buscar">
+              <form action="/regi" method="post">
+                <div className="gh">
+              <img width="50" height="50" src="https://img.icons8.com/stickers/100/palm-tree.png" alt="palm-tree"/>
+                <Input  type="select" name="pt">
                   <option value="">selecione un paquete turistico</option>
                   {paquete &&
                     paquete.map((item, index) => (
@@ -89,9 +91,10 @@ export default function Actividad(args) {
                       </option>
                     ))}
                 </Input>
-                <button type="submit" className="ov-btn-slide-top">
-                  Buscar
-                </button>
+                <Button type="submit">
+                 🔍
+                </Button>
+                </div>
               </form>
             </div>
           </div>
