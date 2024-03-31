@@ -90,7 +90,7 @@ export default function Incidente(args) {
               <form action="/inlist" method="post">
                 <div className="gh">
               <img width="50" height="50" src="https://img.icons8.com/stickers/100/palm-tree.png" alt="palm-tree"/>
-                <Input  type="select" name="pt">
+                <Input  type="select" name="paqu">
                   <option value="">selecione un paquete turistico</option>
                   {paquete &&
                     paquete.map((item, index) => (

@@ -22,9 +22,6 @@ let almacen = {};
 
 app.post("/regi", function(req, res) {
  const { pt } = req.body;
- // Almacenar el valor en el objeto 'almacen' con una clave única, por ejemplo, el ID de la sesión
- // Aquí asumimos que cada usuario tiene una sesión única, lo cual es una simplificación
- // En un entorno real, deberías usar algo más robusto como tokens de sesión o autenticación
  almacen[req.sessionID] = pt;
  return pt
 });
@@ -55,6 +52,8 @@ app.get('/pts', (req, res) => {
        res.json(results);
   });
  });
+
+
  app.get('/xd', (req, res)=>{
     db.query('SELECT * FROM `actividades_ejecucion` WHERE 1', (err, results) => {
        if (err) {
@@ -65,16 +64,29 @@ app.get('/pts', (req, res) => {
        res.json(results);
   });
  })
-app.get('/inci', (req, res) => {
-   db.query('SELECT i.id_incidentes, i.descripcion_incidente, i.Paquete_Turistico_id_Paquete_Turistico, i.tipo_incidencia_id_tipo_incidencia, i.fecha, i.hora, i.ubicacion, ti.tipo_incidencia FROM incidentes i JOIN tipo_incidencia ti ON ti.id_tipo_incidencia = i.tipo_incidencia_id_tipo_incidencia ORDER BY i.id_incidentes ASC;', (err, results) => {
-      if (err) {
-          console.error('Error al ejecutar la consulta:', err);
-          throw err;
-      }
-   
-      res.json(results);
+ let contain = {};
+
+ app.post("/inlist", function(req, res) {
+  const { paqu } = req.body;
+  contain[req.sessionID] =paqu;
+  return paqu
  });
-});
+ app.get('/inci', (req, res) => {
+    // Recuperar el valor almacenado usando la clave única (por ejemplo, el ID de la sesión)
+    const paqu = contain[req.sessionID];
+    if (!paqu) {
+      return res.status(400).send('No se encontró el valor almacenado.');
+    }
+ 
+    db.query('SELECT i.id_incidentes, i.descripcion_incidente, i.Paquete_Turistico_id_Paquete_Turistico, i.tipo_incidencia_id_tipo_incidencia, i.fecha, i.hora, i.ubicacion, ti.tipo_incidencia FROM incidentes i JOIN tipo_incidencia ti ON ti.id_tipo_incidencia = i.tipo_incidencia_id_tipo_incidencia WHERE i.Paquete_Turistico_id_Paquete_Turistico = ? ORDER BY i.id_incidentes ASC;', [paqu], (err, results) => {
+        if (err) {
+            console.error('Error al ejecutar la consulta:', err);
+            throw err;
+        }
+     
+        res.json(results);
+    });
+ });
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
