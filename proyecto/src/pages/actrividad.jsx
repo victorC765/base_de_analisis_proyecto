@@ -15,7 +15,7 @@ import {
 import "../styles/incidetes.css";
 import ima from "../assets/lista-de-quehaceres.png";
 import CambiosActividad from "../components/cambiosActividad";
-
+import { format } from "date-fns";
 export default function Actividad(args) {
   //variable de la modal para ingresar actividad
   const [modal, setModal] = useState(false);
@@ -45,6 +45,9 @@ export default function Actividad(args) {
     horaci !== "" &&
     horacfc !== "" &&
     pt !== "";
+    const [modalpt, setModalpt] = useState(false);
+
+  const togglept = () => setModalpt(!modalpt);
 
   useEffect(() => {
     fetch("http://localhost:3000/pepe")
@@ -73,12 +76,47 @@ export default function Actividad(args) {
         </div>
         <div className="ta">
           <div className="coin">
-            <div>
+           
               <button onClick={toggle} className="ov-btn-slide-top">
                 + Agregar
               </button>
-            </div>
+            
             <div>
+            <div className="gh">
+            <button className="lll" onClick={togglept}>
+            <img width="40" height="40" src="https://img.icons8.com/external-tulpahn-outline-color-tulpahn/64/000000/external-view-healthcare-tulpahn-outline-color-tulpahn.png" alt="external-view-healthcare-tulpahn-outline-color-tulpahn"/>
+      </button>
+      <Modal isOpen={modalpt} toggle={togglept} {...args} size="xl"  contentClassName="modalpt">
+        <ModalHeader toggle={togglept}><img width="60" height="60" src="https://img.icons8.com/plasticine/100/suitcase.png" alt="suitcase"/>Paquetes turisticos</ModalHeader>
+        <ModalBody>
+          <Table  borderless>
+            <thead>
+              <tr>
+                <th>Destino</th>
+                <th>Descripcion</th>
+                <th>fecha de inicio</th>
+                <th>fecha de fin</th>
+              </tr>
+            </thead>
+            <tbody>
+        {paquete &&
+                    paquete.map((item) => (
+                      <tr key={item.id_Paquete_Turistico}>
+                        <td>{item.nombre}</td>
+                        <td>{item.descripcion_PT}</td>
+                        <td>{format(new Date(item.fecha_inicio), "dd/MM/yyyy")}</td>
+                        <td>{format(new Date(item.fecha_fin), "dd/MM/yyyy")}</td>
+                      </tr>
+                    ))}
+                    </tbody>
+                    </Table>
+        </ModalBody>
+        <ModalFooter>
+          <Button color="danger" onClick={togglept}>
+            cerrar
+          </Button>
+        </ModalFooter>
+      </Modal>
               <form action="/regi" method="post">
                 <div className="gh">
               <img width="50" height="50" src="https://img.icons8.com/stickers/100/palm-tree.png" alt="palm-tree"/>
@@ -91,12 +129,13 @@ export default function Actividad(args) {
                       </option>
                     ))}
                 </Input>
-                <Button type="submit">
+                <Button type="submit" color="success">
                  🔍
                 </Button>
                 </div>
               </form>
             </div>
+          </div>
           </div>
           <Table hover striped>
             <thead className="table-primary" size="lg">

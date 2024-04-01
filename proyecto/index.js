@@ -96,11 +96,12 @@ app.post("/regiac",function(req,res)
       const { catego, actividad, descripcionac, ubicacionac, horaci, horacfc, pt } = req.body;
       let inyec="INSERT INTO `actividades_ejecucion`(  `actividad`, `descripcion_actividad`, `lugar`, `hora_incio`, `hora_fin`, `Paquete_Turistico_id_Paquete_Turistico`, `categoria_id_categoria`, `Bitacora_id_Bitacora`, `cumplimiento_id_cumplimiento`) VALUES ('"+actividad+"','"+descripcionac+"','"+ubicacionac+"','"+horaci+"','"+horacfc+"','"+pt+"','"+catego+"','"+pt+"','2')"
       db.query(inyec,function(error){
-          if(error){
-              console.log(error);
-          }else{
-              console.log("Registro exitoso");
-          }      
+        if (error) {
+            console.error('Error registrados datos:', error);sss
+            res.status(500).send('Error registrados datos');
+        } else {
+            console.log('Datos registerados exitosamente');
+        }   
       });
       
       
@@ -115,20 +116,20 @@ app.put('/actualizar-incidente', (req, res) => {
             console.error('Error actualizando datos:', error);
             res.status(500).send('Error actualizando datos');
         } else {
-            res.status(200).send('Datos actualizados exitosamente');
+            console.log('Datos actualizados exitosamente');
         }
     });
     let inac="INSERT INTO `incidentes_x_actividades`( `incidentes_id_incidentes`, `actividades_ejecucion_id_actividades_ejecución`)VALUES ('"+id_incidentes+"','"+ actividadesxincidente +"')"
     db.query(inac,function(error){
-      if(error){
-          console.log(error);
-      }else{
-          console.log("Registro exitoso");
-      }      
-  });
+        if (error) {
+            console.error('Error registrados datos:', error);
+            res.status(500).send('Error registrados datos');
+        } else {
+            console.log('Datos registrados exitosamente');
+        }
 
 });
-
+})
 // Example of an update endpoint in Express
 app.put('/actualizar-actividad', (req, res) => {
     const { id_actividades_ejecucion, actividad, descripcion_actividad, lugar, hora_incio, hora_fin, Paquete_Turistico_id_Paquete_Turistico, categoria_id_categoria, Bitacora_id_Bitacora, cumplimiento_id_cumplimiento } = req.body;
@@ -150,11 +151,12 @@ app.post("/validar",function(req,res)
     const { incidente, descripcion, fecha, hora, ubicacion,pt } = req.body;
     let inyec="INSERT INTO `incidentes`( `descripcion_incidente`, `Paquete_Turistico_id_Paquete_Turistico`, `tipo_incidencia_id_tipo_incidencia`, `fecha`, `hora`, `ubicacion`) VALUES ('"+descripcion+"','"+pt+"','"+incidente+"','"+fecha+"','"+hora+"','"+ubicacion+"')"
     db.query(inyec,function(error){
-      if(error){
-          console.log(error);
-      }else{
-          console.log("Registro exitoso");
-      }      
+        if (error) {
+            console.error('Error actualizando datos:', error);
+            res.status(500).send('Error registrar datos');
+        } else {
+            res.status(200).send('Datos registrados exitosamente');
+        }   
   });
 
    

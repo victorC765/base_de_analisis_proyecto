@@ -52,7 +52,13 @@
     display: flex;
 		justify-content: space-between;
 }
-
+.lll{
+    margin-right: 10px;
+    margin-left: 10px;
+    background-color: #ffa43b;
+    border-radius: 7px ;
+    border: nones;
+}
 .custom-modal-content-ac{
     background-color: #dffffa;
     filter:drop-shadow(-5px 0.3rem  0.3rem);
@@ -180,4 +186,9 @@
     background-color: #4382ef;
     padding: 18;
 
+}
+.modalpt{
+    padding: 25px;
+    background-color: rgb(255, 152, 121);
+    border-radius: 20px;
 }

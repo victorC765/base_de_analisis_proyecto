@@ -64,7 +64,9 @@ export default function Incidente(args) {
       .then((paquete) => setPaquete(paquete))
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
+  const [modalpt, setModalpt] = useState(false);
 
+  const togglept = () => setModalpt(!modalpt);
   return (
     <div>
       <div className="cen">
@@ -87,6 +89,42 @@ export default function Incidente(args) {
               </button>
             </div>
             <div>
+            <div className="gh">
+            <button className="lll" onClick={togglept}>
+            <img width="40" height="40" src="https://img.icons8.com/external-tulpahn-outline-color-tulpahn/64/000000/external-view-healthcare-tulpahn-outline-color-tulpahn.png" alt="external-view-healthcare-tulpahn-outline-color-tulpahn"/>
+      </button>
+      <Modal isOpen={modalpt} toggle={togglept} {...args} size="xl"  contentClassName="modalpt">
+        <ModalHeader toggle={togglept}><img width="60" height="60" src="https://img.icons8.com/plasticine/100/suitcase.png" alt="suitcase"/>Paquetes turisticos</ModalHeader>
+        <ModalBody>
+          <Table  borderless>
+            <thead>
+              <tr>
+                <th>Destino</th>
+                <th>Descripcion</th>
+                <th>fecha de inicio</th>
+                <th>fecha de fin</th>
+              </tr>
+            </thead>
+            <tbody>
+        {paquete &&
+                    paquete.map((item) => (
+                      <tr key={item.id_Paquete_Turistico}>
+                        <td>{item.nombre}</td>
+                        <td>{item.descripcion_PT}</td>
+                        <td>{format(new Date(item.fecha_inicio), "dd/MM/yyyy")}</td>
+                        <td>{format(new Date(item.fecha_fin), "dd/MM/yyyy")}</td>
+                      </tr>
+                    ))}
+                    </tbody>
+                    </Table>
+        </ModalBody>
+        <ModalFooter>
+          <Button color="danger" onClick={togglept}>
+            cerrar
+          </Button>
+        </ModalFooter>
+      </Modal>
+            
               <form action="/inlist" method="post">
                 <div className="gh">
               <img width="50" height="50" src="https://img.icons8.com/stickers/100/palm-tree.png" alt="palm-tree"/>
@@ -99,11 +137,12 @@ export default function Incidente(args) {
                       </option>
                     ))}
                 </Input>
-                <Button type="submit">
+                <Button type="submit" color="primary">
                  🔍
                 </Button>
                 </div>
               </form>
+            </div>
             </div>
           </div>
             </div>
@@ -276,6 +315,7 @@ export default function Incidente(args) {
                   name="fecha"
                   value={fecha}
                   onChange={(e) => setFecha(e.target.value)}
+                  min="2024-01-01" max="2025-12-31"
                   invalid={fecha === ""}
                   valid={fecha !== ""}
                   id="fecha"
